@@ -129,6 +129,7 @@ def main():
         action="store_true",
         help="Process all PDF files in the input folder",
     )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     print("=" * 55)
@@ -144,13 +145,15 @@ def main():
             summary = batch_extract(args.input, args.output)
         except (FileNotFoundError, ValueError) as e:
             print(f"Error: {e}")
-            return
+            sys.exit(1)
 
         print()
         print("-" * 55)
         print(f"  Processed : {summary['processed']}  |  Failed: {summary['failed']}")
         if summary["processed"]:
             print(f"  Output folder: {summary['output_dir']}")
+        if summary["failed"]:
+            sys.exit(1)
     else:
         print(f"  Mode   : Single file")
         print(f"  Input  : {args.input}")
@@ -164,6 +167,7 @@ def main():
             print(f"  Saved to: {result['output_file']}")
         except (FileNotFoundError, ValueError) as e:
             print(f"Error: {e}")
+            sys.exit(1)
 
     print("=" * 55)
 
