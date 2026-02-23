@@ -15,9 +15,7 @@ Demonstrates:
 Setup:
     1. Enable 2-Factor Authentication on your Gmail account
     2. Generate an App Password at myaccount.google.com/apppasswords
-    3. Create a .env file in this directory:
-           EMAIL_ADDRESS=you@gmail.com
-           EMAIL_PASSWORD=your_app_password
+    3. Copy .env.example to .env and fill in your credentials
 
 Contacts CSV format (required columns: name, email):
     name,email,company
@@ -131,6 +129,7 @@ def main():
         metavar="SECONDS",
         help="Seconds to wait between each send (default: 1.0)",
     )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     load_dotenv()
@@ -151,7 +150,7 @@ def main():
         contacts = load_contacts(args.contacts)
     except (FileNotFoundError, ValueError) as e:
         print(f"Error: {e}")
-        return
+        sys.exit(1)
 
     print(f"  Contacts loaded : {len(contacts)}")
     print(f"  Subject         : {args.subject}")
@@ -167,10 +166,10 @@ def main():
             smtp_conn.login(email_address, email_password)
         except smtplib.SMTPAuthenticationError:
             print("Error: Gmail authentication failed. Check your App Password in .env.")
-            return
+            sys.exit(1)
         except smtplib.SMTPException as e:
             print(f"Error: Could not connect to Gmail SMTP: {e}")
-            return
+            sys.exit(1)
 
     try:
         for i, contact in enumerate(contacts, 1):
@@ -200,6 +199,9 @@ def main():
     action = "Would send" if args.dry_run else "Sent"
     print(f"  {action}: {sent}  |  Failed: {failed}")
     print("=" * 55)
+
+    if failed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
