@@ -12,12 +12,13 @@ Demonstrates:
 Usage:
     python csv_cleaner.py input.csv output.csv
 
-Author: Zac
+Author: Zachary Degitz
 """
 
 import csv
 import argparse
 import os
+import sys
 from datetime import datetime
 
 
@@ -86,6 +87,7 @@ def main():
     )
     parser.add_argument("input", help="Path to the input CSV file")
     parser.add_argument("output", help="Path to write the cleaned CSV file")
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     try:
@@ -94,6 +96,7 @@ def main():
         print(f"Clean file saved to: {summary['output_file']}")
     except (FileNotFoundError, ValueError) as e:
         print(f"Error: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
