@@ -121,6 +121,7 @@ def main():
         metavar="INDEX",
         help="Worksheet index to export (0 = first sheet, default: 0)",
     )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     print("=" * 50)
@@ -149,6 +150,7 @@ def main():
         print(f"  Saved to: {summary['output_file']}")
     except (RuntimeError, ValueError) as e:
         print(f"Error: {e}")
+        sys.exit(1)
     print("=" * 50)
 
 
