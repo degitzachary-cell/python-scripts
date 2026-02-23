@@ -1,0 +1,7 @@
+name,email,phone,city
+  Alice Johnson  ,  ALICE@EXAMPLE.COM  ,  0412 345 678  ,  Sydney
+Bob Smith,BOB@EXAMPLE.COM,0498 765 432,Melbourne
+  ,  ,  ,
+Carol White  ,carol@EXAMPLE.com,,  Brisbane
+  David Brown,david@example.com,  0411 222 333  ,Perth
+,,,,
