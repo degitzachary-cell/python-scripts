@@ -19,6 +19,7 @@ Author: Zachary Degitz
 
 import argparse
 import shutil
+import sys
 from pathlib import Path
 
 CATEGORIES: dict[str, list[str]] = {
@@ -103,6 +104,7 @@ def main():
         action="store_true",
         help="Preview what would be moved without making any changes",
     )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     label = "DRY RUN — no files will be moved" if args.dry_run else "Organising files..."
@@ -115,7 +117,7 @@ def main():
         summary = organise_folder(args.folder, dry_run=args.dry_run)
     except (FileNotFoundError, ValueError) as e:
         print(f"Error: {e}")
-        return
+        sys.exit(1)
 
     print()
     print("-" * 50)
