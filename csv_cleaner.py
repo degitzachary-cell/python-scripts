@@ -31,6 +31,8 @@ def clean_row(row: dict) -> dict:
     """
     cleaned = {}
     for key, value in row.items():
+        if key is None:
+            continue  # DictReader sets key=None for overflow columns in malformed rows
         key = key.strip()
         if isinstance(value, str):
             value = value.strip()
