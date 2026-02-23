@@ -153,6 +153,7 @@ def main():
         dest="fmt",
         help="Output format: csv or json (default: csv)",
     )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
     args = parser.parse_args()
 
     print("=" * 50)
@@ -181,6 +182,7 @@ def main():
 
     except RuntimeError as e:
         print(f"Error: {e}")
+        sys.exit(1)
     print("=" * 50)
 
 
