@@ -1,5 +1,7 @@
 # 🐍 Python Scripts
 
+![CI](https://github.com/degitzachary-cell/python-scripts/actions/workflows/ci.yml/badge.svg)
+
 A collection of clean, well-documented Python automation scripts built for real-world freelance use cases. Each script is production-ready, handles errors gracefully, and is easy to customise for specific client needs.
 
 **Author:** Zachary Degitz
@@ -30,6 +32,8 @@ Clone the repo and install dependencies for whichever script you need:
     pip install pymupdf                   # pdf_extractor.py
     pip install python-dotenv             # email_sender.py
 
+See `requirements.txt` for pinned versions.
+
 ---
 
 ## 📄 Script Details
@@ -41,6 +45,9 @@ No dependencies required.
 ### csv_cleaner.py
 Reads a CSV, strips whitespace, normalises emails to lowercase, removes empty rows, writes clean output.
 Usage: python csv_cleaner.py input.csv output_clean.csv
+
+Try it with the sample file:
+Usage: python csv_cleaner.py samples/dirty.csv output_clean.csv
 
 ### file_organiser.py
 Scans a folder and sorts files into subfolders by type. Supports --dry-run to preview first.
@@ -60,14 +67,34 @@ Usage: python web_scraper.py --url https://example.com --output headings.json --
 
 ### email_sender.py
 Sends personalised bulk emails via Gmail SMTP from a CSV contact list with HTML template support.
-Create a .env file with EMAIL_ADDRESS and EMAIL_PASSWORD (Gmail App Password).
-Usage: python email_sender.py --contacts contacts.csv --template email.html --subject "Hi {name}!"
+Copy .env.example to .env and add your Gmail App Password.
+Usage: python email_sender.py --contacts samples/contacts.csv --template email.html --subject "Hi {name}!"
 Use --dry-run to preview without sending.
 
 ### pdf_extractor.py
 Extracts text from PDF files page by page. Supports batch processing of entire folders.
 Usage: python pdf_extractor.py --input report.pdf --output report.txt
 Batch: python pdf_extractor.py --input ./pdfs/ --output ./extracted/ --batch
+
+---
+
+## 🧪 Tests
+
+    pip install pytest requests beautifulsoup4 python-dotenv
+    pytest tests/ -v
+
+Tests cover pure functions across all scripts and require no network access or external services.
+
+---
+
+## 📂 Sample Files
+
+The `samples/` folder contains ready-to-use test data:
+
+| File | Used by |
+|------|---------|
+| `samples/dirty.csv` | csv_cleaner.py — messy CSV with whitespace, mixed-case emails, empty rows |
+| `samples/contacts.csv` | email_sender.py — example contact list |
 
 ---
 
